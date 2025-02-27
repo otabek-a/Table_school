@@ -22,10 +22,13 @@ def check(update,context):
     text=update.message.text.strip().lower()
     if '/' in text :
         add(update, context)
+    elif '🔍' in text:
+        find_students(update,context)
 
 updater = Updater(token=TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
+dispatcher.add_handler(MessageHandler(Filters.text('✏️ find students 🛠'),find))
 dispatcher.add_handler(MessageHandler(Filters.text('🔙 Back ⬅️'),start))
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(MessageHandler(Filters.text('📚 Students 🏫'),students))
