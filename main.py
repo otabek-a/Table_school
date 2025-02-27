@@ -5,6 +5,7 @@ from data_students import *
 from begin import start
 from config import TOKEN
 import sqlite3
+from teacher_data import *
 table=sqlite3.connect('students.db')
 otabek=table.cursor()
 otabek.execute( """
@@ -20,10 +21,15 @@ table.commit()
 
 def check(update,context):
     text=update.message.text.strip().lower()
-    if '/' in text :
+    if '*' in text :
+        add_t(update,context)
+    elif '/' in text :
         add(update, context)
     elif '🔍' in text:
         find_students(update,context)
+    
+    elif '🔎' in text:
+        find_teachers(update,context)
 
 updater = Updater(token=TOKEN, use_context=True)
 dispatcher = updater.dispatcher
@@ -35,6 +41,12 @@ dispatcher.add_handler(MessageHandler(Filters.text('📚 Students 🏫'),student
 dispatcher.add_handler(MessageHandler(Filters.text('📋 Show All Students 👥'),show_students))
 dispatcher.add_handler(MessageHandler(Filters.text('➕ Add Student 📝'),add_students))
 dispatcher.add_handler(MessageHandler(Filters.text('🗑 Clear List ❌'),clear_data))
+
+dispatcher.add_handler(MessageHandler(Filters.text('✏️ find teachers 🛠'),find_t  ))
+dispatcher.add_handler(MessageHandler(Filters.text('👨‍🏫 Teachers 🎓'),teachers))
+dispatcher.add_handler(MessageHandler(Filters.text('📋 Show All teachers 👥'),show_teachers))
+dispatcher.add_handler(MessageHandler(Filters.text('➕ Add teachers 📝'),add_teachers))
+dispatcher.add_handler(MessageHandler(Filters.text('🗑 Clear List ❌'),clear_teachers))
 dispatcher.add_handler(MessageHandler(Filters.text,check))
 updater.start_polling()
 updater.idle()
