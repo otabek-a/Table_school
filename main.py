@@ -3,7 +3,7 @@ from telegram import Update, ReplyKeyboardMarkup
 from tinydb import TinyDB, Query
 from data_students import *
 from begin import start
-from config import TOKEN
+
 import sqlite3
 from teacher_data import *
 table=sqlite3.connect('students.db')
@@ -31,7 +31,7 @@ def check(update,context):
     elif '🔎' in text:
         find_teachers(update,context)
 
-updater = Updater(token=TOKEN, use_context=True)
+updater = Updater('7551383969:AAEBiwLAnAomR5KsUJ7hbID1vEu3BY3g0-M', use_context=True)
 dispatcher = updater.dispatcher
 
 dispatcher.add_handler(MessageHandler(Filters.text('✏️ find students 🛠'),find))
